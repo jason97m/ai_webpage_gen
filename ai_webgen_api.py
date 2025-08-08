@@ -18,14 +18,16 @@ def generate_site():
     full_prompt = f"Generate a single-page HTML website with inline CSS based on: {prompt}"
 
     try:
-        response = openai.Completion.create(
-            engine='text-davinci-003',
-            prompt=full_prompt,
-            max_tokens=1000,
-            temperature=0.7
-        )
-
-        html_code = response.choices[0].text.strip()
+        response = openai.ChatCompletion.create(
+    model="gpt-3.5-turbo",
+    messages=[
+        {"role": "system", "content": "You are a helpful assistant."},
+        {"role": "user", "content": full_prompt}
+    ],
+    max_tokens=1000,
+    temperature=0.7,
+)
+html_code = response.choices[0].message.content.strip()
         return jsonify({'html': html_code})
 
     except Exception as e:
