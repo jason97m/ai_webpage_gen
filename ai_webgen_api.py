@@ -19,15 +19,15 @@ def generate_site():
 
     try:
         response = openai.ChatCompletion.create(
-    model="gpt-3.5-turbo",
-    messages=[
-        {"role": "system", "content": "You are a helpful assistant."},
-        {"role": "user", "content": full_prompt}
-    ],
-    max_tokens=1000,
-    temperature=0.7,
-)
-html_code = response.choices[0].message.content.strip()
+           model="gpt-3.5-turbo",
+           messages=[
+               {"role": "system", "content": "You are a helpful assistant."},
+               {"role": "user", "content": full_prompt}
+           ],
+           max_tokens=1000,
+           temperature=0.7,
+        )
+        html_code = response.choices[0].message.content.strip()
         return jsonify({'html': html_code})
 
     except Exception as e:
