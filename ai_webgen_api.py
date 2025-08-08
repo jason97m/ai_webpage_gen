@@ -26,11 +26,10 @@ def generate_site():
             temperature=0.7,
         )
         html_code = response.choices[0].message.content.strip()
+        lines = html_code.splitlines()
 
-        # Remove markdown code block markers if present
-        if html_code.startswith("```") and html_code.endswith("```"):
-            # Remove the first line ```html or ```
-            html_code = "\n".join(html_code.split("\n")[1:-1]).strip()
+        if lines and lines[0].strip().startswith("```") and lines[-1].strip().startswith("```"):
+            html_code = "\n".join(lines[1:-1]).strip()
 
         return jsonify({'html': html_code})
 
