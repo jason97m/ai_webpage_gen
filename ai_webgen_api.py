@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 import openai
 import os
+import re
 
 app = Flask(__name__)
 openai.api_key = os.getenv("OPENAI_API_KEY")
@@ -25,11 +26,15 @@ def generate_site():
             max_tokens=1000,
             temperature=0.7,
         )
-        html_code = response.choices[0].message.content.strip()
-        lines = html_code.splitlines()
 
-        if lines and lines[0].strip().startswith("```") and lines[-1].strip().startswith("```"):
-            html_code = "\n".join(lines[1:-1]).strip()
+        raw_content = response.choices[0].message.content.strip()
+
+        # Extract only the HTML code block if present
+        match = re.search(r"```(?:html)?\s*(.*?)```", raw_content, re.DOTALL)
+        if match:
+            html_code = match.group(1).strip()
+        else:
+            html_code = raw_content  # fallback if no code block is found
 
         return jsonify({'html': html_code})
 
