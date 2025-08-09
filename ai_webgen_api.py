@@ -9,6 +9,7 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 @app.route('/generate', methods=['POST'])
 def generate_site():
     data = request.get_json()
+    print("=== RAW POST DATA ===", data)  # This will log the whole JSON
     prompt = data.get('prompt', '')
 
     if not prompt:
