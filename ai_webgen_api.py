@@ -33,7 +33,7 @@ def generate_site():
         print(raw_content)
 
         # Extract only the HTML code block if present
-        match = re.search(r"```(?:html)?\s*(.*?)```", raw_content, re.DOTALL)
+        match = re.search(r"```(?:html)?\s*(.*)```", raw_content, re.DOTALL)
         if match:
             html_code = match.group(1).strip()
         else:
