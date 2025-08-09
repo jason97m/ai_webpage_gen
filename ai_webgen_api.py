@@ -29,6 +29,8 @@ def generate_site():
         )
 
         raw_content = response.choices[0].message.content.strip()
+        print("=== RAW AI RESPONSE ===")
+        print(raw_content)
 
         # Extract only the HTML code block if present
         match = re.search(r"```(?:html)?\s*(.*?)```", raw_content, re.DOTALL)
