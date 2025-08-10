@@ -11,11 +11,22 @@ def generate_site():
     data = request.get_json()
     print("=== RAW POST DATA ===", data)  # This will log the whole JSON
     prompt = data.get('prompt', '')
+    prompt2 = """
+    Create a single-page business website described by {prompt}
+    The page should include:
+    - A hero section with a catchy headline and call-to-action button.
+    - An 'About Us' section with a short paragraph.
+    - A 'Services' section with three service cards.
+    - A 'Contact' section with a simple contact form.
+    Use a clean, modern, responsive design with colors inspired by navy blue and white.
+    Write all HTML and CSS in a single file using inline <style> tags. 
+    Do not include any explanations — output only the HTML code.
+    """
 
     if not prompt:
         return jsonify({'error': 'Missing prompt'}), 400
 
-    full_prompt = f"Generate a single-page HTML website with inline CSS based on: {prompt}"
+    full_prompt = f"Generate a single-page HTML website with inline CSS based on: {prompt2}"
 
     try:
         response = openai.chat.completions.create(
@@ -29,9 +40,11 @@ def generate_site():
         )
 
         raw_content = response.choices[0].message.content.strip()
+        print("=== RAW AI RESPONSE ===")
+        print(raw_content)
 
         # Extract only the HTML code block if present
-        match = re.search(r"```(?:html)?\s*(.*?)```", raw_content, re.DOTALL)
+        match = re.search(r"```(?:html)?\s*(.*)```", raw_content, re.DOTALL)
         if match:
             html_code = match.group(1).strip()
         else:
