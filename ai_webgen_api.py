@@ -13,12 +13,13 @@ def generate_site():
     prompt = data.get('prompt', '')
     prompt2 = """
     Create a single-page business website described by {prompt}
-    The page should include:
+    The page should include at a minimum:
     - A hero section with a catchy headline and call-to-action button.
     - An 'About Us' section with a short paragraph.
     - A 'Services' section with three service cards.
     - A 'Contact' section with a simple contact form.
-    Use a clean, modern, responsive design with colors inspired by navy blue and white.
+    Add any other pages or colors or menu items the user requests in {prompt}
+    Use a clean, modern, responsive design with colors inspired by {prompt}.
     Write all HTML and CSS in a single file using inline <style> tags. 
     Do not include any explanations — output only the HTML code.
     """
