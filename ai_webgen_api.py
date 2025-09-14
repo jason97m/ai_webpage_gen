@@ -27,7 +27,7 @@ def generate_site():
     if not prompt:
         return jsonify({'error': 'Missing prompt'}), 400
 
-    full_prompt = f"Generate a single-page HTML website with inline CSS based on: {prompt2}"
+    full_prompt = f"Generate a single-page HTML website with inline CSS based on: {prompt}"
 
     try:
         response = openai.chat.completions.create(
